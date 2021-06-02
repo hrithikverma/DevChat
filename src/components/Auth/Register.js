@@ -78,11 +78,11 @@ class Register extends React.Component {
               )}?d=identicon`,
             })
             .then(() => {
-              console.log(createdUser);
+              // console.log(createdUser);
               this.saveUser(createdUser).then(() => {
-                console.log("user saved");
+                // console.log("user saved");
+                this.setState({ loading: false });
               });
-              // this.setState({ loading: false });
             })
             .catch((err) => {
               this.setState({ loading: false, errors: errors.concat(err) });
@@ -116,7 +116,7 @@ class Register extends React.Component {
     return (
       <Grid textAlign="center" verticalAlign="middle" className="app register">
         <Grid.Column style={{ maxWidth: 450 }}>
-          <Header as="h2" icon color="violet" textAlign="center">
+          <Header as="h1" icon color="violet" textAlign="center">
             <Icon name="puzzle piece" color="violet" />
             Register for DevChat
           </Header>
