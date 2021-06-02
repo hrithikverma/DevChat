@@ -5,3 +5,20 @@ body,
   background: #eee;
   padding: 1em;
 }
+
+.ui.stacked.segment:after,
+.ui.stacked.segment:before,
+.ui.stacked.segments:after,
+.ui.stacked.segments:before {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 100%;
+  height: 0px;
+  visibility: hidden;
+}
+
+.register a {
+  color: #6435c9;
+}
