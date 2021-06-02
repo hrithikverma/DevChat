@@ -1,5 +1,6 @@
 import React from "react";
 import firebase from "../../firebase";
+import md5 from "md5";
 import {
   Grid,
   Button,
@@ -18,17 +19,23 @@ class Register extends React.Component {
     password: "",
     passwordConfirmation: "",
     errors: [],
+    loading: false,
+    usersRef: firebase.database().ref("users"),
   };
 
-  isFormValid = () => {
+  isFormValid = ({ password, passwordConfirmation }) => {
     let errors = [];
     let error;
     if (this.isFormEmpty(this.state)) {
       error = { message: "Fill in all fields" };
       this.setState({ errors: errors.concat(error) });
       return false;
-    } else if (!this.isPasswordValid(this.state)) {
-      error = { message: "Password is invalid" };
+    } else if (password.length < 8 || passwordConfirmation.length < 8) {
+      error = { message: "Password must be atleast 8 characters" };
+      this.setState({ errors: errors.concat(error) });
+      return false;
+    } else if (password !== passwordConfirmation) {
+      error = { message: "Passwords do not match" };
       this.setState({ errors: errors.concat(error) });
       return false;
     } else {
@@ -45,18 +52,6 @@ class Register extends React.Component {
     );
   };
 
-  isPasswordValid = ({ password, passwordConfirmation }) => {
-    if (
-      password.length < 6 ||
-      passwordConfirmation.length < 6 ||
-      password !== passwordConfirmation
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
   displayErrors = (errors) =>
     errors.map((error, i) => {
       return <p key={i}>{error.message}</p>;
@@ -68,19 +63,54 @@ class Register extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.isFormValid()) {
+    if (this.isFormValid(this.state)) {
+      this.setState({ errors: [], loading: true });
+      let errors = [];
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
         .then((createdUser) => {
-          console.log(createdUser);
+          createdUser.user
+            .updateProfile({
+              displayName: this.state.username,
+              photoURL: `https://gravatar.com/avatar/${md5(
+                createdUser.user.email
+              )}?d=identicon`,
+            })
+            .then(() => {
+              console.log(createdUser);
+              this.saveUser(createdUser).then(() => {
+                console.log("user saved");
+              });
+              // this.setState({ loading: false });
+            })
+            .catch((err) => {
+              this.setState({ loading: false, errors: errors.concat(err) });
+            });
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          this.setState({ loading: false, errors: errors.concat(err) });
+        });
     }
   };
 
+  saveUser = (createdUser) => {
+    return this.state.usersRef.child(createdUser.user.uid).set({
+      name: createdUser.user.displayName,
+      avatar: createdUser.user.photoURL,
+    });
+  };
+
+  handleInputError = (errors, inputName) => {
+    return errors.some((error) =>
+      error.message.toLowerCase().includes(inputName)
+    )
+      ? "error"
+      : "";
+  };
+
   render() {
-    const { username, email, password, passwordConfirmation, errors } =
+    const { username, email, password, passwordConfirmation, errors, loading } =
       this.state;
 
     return (
@@ -110,6 +140,7 @@ class Register extends React.Component {
                 placeholder="Email Address"
                 onChange={this.handleChange}
                 value={email}
+                className={this.handleInputError(errors, "email")}
                 type="email"
               />
               <Form.Input
@@ -120,6 +151,7 @@ class Register extends React.Component {
                 placeholder="Password"
                 onChange={this.handleChange}
                 value={password}
+                className={this.handleInputError(errors, "password")}
                 type="password"
               />
               <Form.Input
@@ -130,10 +162,17 @@ class Register extends React.Component {
                 placeholder="Password Confirmation"
                 onChange={this.handleChange}
                 value={passwordConfirmation}
+                className={this.handleInputError(errors, "password")}
                 type="password"
               />
 
-              <Button color="violet" fluid size="large">
+              <Button
+                disabled={loading}
+                className={loading ? "loading" : ""}
+                color="violet"
+                fluid
+                size="large"
+              >
                 Submit
               </Button>
             </Segment>
