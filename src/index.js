@@ -10,6 +10,7 @@ import {
   Route,
   withRouter,
 } from "react-router-dom";
+import Spinner from "./Spinner";
 import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
@@ -31,7 +32,9 @@ class Root extends React.Component {
   }
 
   render() {
-    return (
+    return this.props.isLoading ? (
+      <Spinner />
+    ) : (
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/login" component={Login} />
