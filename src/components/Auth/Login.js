@@ -62,10 +62,10 @@ class Login extends React.Component {
     const { email, password, errors, loading } = this.state;
 
     return (
-      <Grid textAlign="center" verticalAlign="middle" className="app register">
+      <Grid textAlign="center" verticalAlign="middle" className="app login">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h1" icon color="violet" textAlign="center">
-            <Icon name="code branch" color="violet" />
+            <Icon name="servicestack" color="violet" />
             Login to DevChat
           </Header>
           <Form onSubmit={this.handleSubmit} size="large" autoComplete="off">

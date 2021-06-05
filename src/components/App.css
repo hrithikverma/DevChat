@@ -19,6 +19,17 @@ body,
   visibility: hidden;
 }
 
+h1.ui.header {
+  font-size: 2.5rem;
+}
+
+/* register */
+
 .register a {
+  color: red;
+}
+
+/* login */
+.login a {
   color: #6435c9;
 }
