@@ -1,27 +1,47 @@
 import React from "react";
 import firebase from "../../firebase";
+import { connect } from "react-redux";
+import { setCurrentChannel } from "../../actions";
 import { Menu, Icon, Modal, Form, Input, Button } from "semantic-ui-react";
 
 class Channels extends React.Component {
   state = {
+    activeChannel: "",
     user: this.props.currentUser,
     channels: [],
     channelName: "",
     channelDetails: "",
     channelsRef: firebase.database().ref("channels"),
     modal: false,
+    firstLoad: true,
   };
 
   componentDidMount() {
     this.addListeners();
   }
 
+  componentWillUnmount() {
+    this.removeListeners();
+  }
+
   addListeners = () => {
     let loadedChannels = [];
     this.state.channelsRef.on("child_added", (snap) => {
       loadedChannels.push(snap.val());
-      this.setState({ channels: loadedChannels });
+      this.setState({ channels: loadedChannels }, () => this.addFirstChannel());
     });
+  };
+
+  removeListeners = () => {
+    this.state.channelsRef.off();
+  };
+
+  addFirstChannel = () => {
+    if (this.state.firstLoad && this.state.channels.length) {
+      const firstChannel = this.state.channels[0];
+      this.changeChannel(firstChannel);
+    }
+    this.setState({ firstLoad: false });
   };
 
   addChannel = () => {
@@ -45,7 +65,7 @@ class Channels extends React.Component {
       .then(() => {
         this.setState({ channelName: "", channelDetails: "" });
         this.closeModal();
-        console.log("Channel added");
+        // console.log("Channel added");
       })
       .catch((err) => {
         console.log(err);
@@ -59,14 +79,24 @@ class Channels extends React.Component {
     }
   };
 
+  changeChannel = (channel) => {
+    this.setActiveChannel(channel);
+    this.props.setCurrentChannel(channel);
+  };
+
+  setActiveChannel = (channel) => {
+    this.setState({ activeChannel: channel.id });
+  };
+
   displayChannels = (channels) =>
     channels.length > 0 &&
     channels.map((channel) => (
       <Menu.Item
         key={channel.id}
         name={channel.name}
-        onClick={() => console.log(channel)}
+        onClick={() => this.changeChannel(channel)}
         style={{ opacity: 0.7 }}
+        active={channel.id === this.state.activeChannel}
       >
         #{channel.name}
       </Menu.Item>
@@ -137,4 +167,4 @@ class Channels extends React.Component {
   }
 }
 
-export default Channels;
+export default connect(null, { setCurrentChannel })(Channels);
