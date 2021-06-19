@@ -50,3 +50,9 @@ h1.ui.header {
   right: 1em;
   z-index: 200;
 }
+
+/* Message.js */
+.message__self {
+  border-left: 2px solid orange;
+  padding-left: 8px;
+}
