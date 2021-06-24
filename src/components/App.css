@@ -38,7 +38,7 @@ h1.ui.header {
 
 .messages {
   height: 58vh;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 /* MessageForm.js */
@@ -52,7 +52,17 @@ h1.ui.header {
 }
 
 /* Message.js */
+
 .message__self {
   border-left: 2px solid orange;
   padding-left: 8px;
+}
+
+.message__image {
+  padding: 1em;
+}
+
+/* ProgressBar.js */
+.progress__bar {
+  margin: 0.3em 0 0 0 !important;
 }

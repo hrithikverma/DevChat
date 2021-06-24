@@ -54,9 +54,9 @@ class Messages extends React.Component {
         <MessagesHeader />
 
         <Segment>
-          <Comment.Group className="messages">
-            {this.displayMessages(messages)}
-          </Comment.Group>
+          <div className="messages">
+            <Comment.Group>{this.displayMessages(messages)}</Comment.Group>
+          </div>
         </Segment>
 
         <MessageForm
