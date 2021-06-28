@@ -116,7 +116,7 @@ class Messages extends React.Component {
 
         <Segment>
           <div className="messages">
-            <Comment.Group>
+            <Comment.Group size="large">
               {searchTerm
                 ? this.displayMessages(searchResults)
                 : this.displayMessages(messages)}

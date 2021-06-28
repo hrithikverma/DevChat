@@ -1,3 +1,12 @@
+@font-face {
+  font-family: SansMedium;
+  src: url(../fonts/ProductSans-Medium.ttf);
+}
+@font-face {
+  font-family: SansRegular;
+  src: url(../fonts/ProductSans-Regular.ttf);
+}
+
 html,
 body,
 .app {
@@ -32,6 +41,11 @@ h1.ui.header {
 /* login */
 .login a {
   color: #6435c9;
+}
+
+/* SidePanel.js */
+.menu {
+  padding-bottom: 2em;
 }
 
 /* Messages.js */
