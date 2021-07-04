@@ -6,6 +6,7 @@ import "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyDYG8mgyVPup0myt3V-Wux79jFCjR33cXA",
   authDomain: "devchat2-e0740.firebaseapp.com",
+  databaseURL: "https://devchat2-e0740-default-rtdb.firebaseio.com",
   projectId: "devchat2-e0740",
   storageBucket: "devchat2-e0740.appspot.com",
   messagingSenderId: "369266833725",
