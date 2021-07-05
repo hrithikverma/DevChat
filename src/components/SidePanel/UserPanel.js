@@ -40,15 +40,20 @@ class UserPanel extends React.Component {
     return (
       <Grid style={{ background: "#4c3c4c" }}>
         <Grid.Column>
-          <Grid.Row style={{ paddingTop: "3vh", margin: 0 }}>
+          <Grid.Row
+            style={{ paddingTop: "5vh", paddingLeft: "0.8vw", margin: 0 }}
+          >
             {/* App Header */}
-            <Header inverted as="h1">
+            <Header inverted as="h2" size="large">
               <Icon name="code"></Icon>
               {/* <img src={"images/slack.png"} alt="dev-chat" /> */}
               <Header.Content>DevChat</Header.Content>
             </Header>
             <Header
-              style={{ padding: "0.25em", marginTop: "3vh" }}
+              style={{
+                padding: "0.25em",
+                margin: "2vh 0",
+              }}
               as="h4"
               inverted
             >
