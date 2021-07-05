@@ -1,5 +1,12 @@
 import React from "react";
-import { Segment, Accordion, Header, Icon, Image } from "semantic-ui-react";
+import {
+  Segment,
+  Accordion,
+  Header,
+  Icon,
+  Image,
+  List,
+} from "semantic-ui-react";
 
 class MetaPanel extends React.Component {
   state = {
@@ -15,8 +22,24 @@ class MetaPanel extends React.Component {
     this.setState({ activeIndex: newIndex });
   };
 
+  formatCount = (num) => (num === 1 ? `${num} post` : `${num} posts`);
+
+  displayTopPosters = (posts) =>
+    Object.entries(posts)
+      .sort((a, b) => b[1].count - a[1].count)
+      .map(([key, val], i) => (
+        <List.Item key={i}>
+          <Image avatar src={val.avatar} />
+          <List.Content>
+            <List.Header as="a">{key}</List.Header>
+            <List.Description>{this.formatCount(val.count)}</List.Description>
+          </List.Content>
+        </List.Item>
+      ));
+
   render() {
     const { activeIndex, privateChannel, channel } = this.state;
+    const { userPosts } = this.props;
 
     if (privateChannel) return null;
 
@@ -35,7 +58,10 @@ class MetaPanel extends React.Component {
             <Icon name="info" />
             Channel Details
           </Accordion.Title>
-          <Accordion.Content active={activeIndex === 0}>
+          <Accordion.Content
+            style={{ paddingLeft: "2vw" }}
+            active={activeIndex === 0}
+          >
             {channel && channel.details}
           </Accordion.Content>
 
@@ -48,8 +74,11 @@ class MetaPanel extends React.Component {
             <Icon name="user circle" />
             Top Posters
           </Accordion.Title>
-          <Accordion.Content active={activeIndex === 1}>
-            posters
+          <Accordion.Content
+            style={{ paddingLeft: "2vw" }}
+            active={activeIndex === 1}
+          >
+            <List>{userPosts && this.displayTopPosters(userPosts)}</List>
           </Accordion.Content>
 
           <Accordion.Title
@@ -62,7 +91,10 @@ class MetaPanel extends React.Component {
             Created By
           </Accordion.Title>
 
-          <Accordion.Content active={activeIndex === 2}>
+          <Accordion.Content
+            style={{ paddingLeft: "2vw" }}
+            active={activeIndex === 2}
+          >
             <Header as="h3">
               <Image circular src={channel && channel.createdBy.avatar} />
               {channel && channel.createdBy.name}

@@ -11,7 +11,7 @@ import MetaPanel from "./MetaPanel/MetaPanel";
 // 1. add firebase config to .env
 // 2. make responsive ( use flexbox and media query)
 
-const App = ({ currentUser, currentChannel, isPrivateChannel }) => {
+const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts }) => {
   return (
     <Grid columns="equal" className="app">
       <ColorPanel />
@@ -31,6 +31,7 @@ const App = ({ currentUser, currentChannel, isPrivateChannel }) => {
         <MetaPanel
           key={currentChannel && currentChannel.id}
           currentChannel={currentChannel}
+          userPosts={userPosts}
           isPrivateChannel={isPrivateChannel}
         />
       </Grid.Column>
@@ -42,6 +43,7 @@ const mapStateToProps = (state) => ({
   currentUser: state.user.currentUser,
   currentChannel: state.channel.currentChannel,
   isPrivateChannel: state.channel.isPrivateChannel,
+  userPosts: state.channel.userPosts,
 });
 
 export default connect(mapStateToProps)(App);
