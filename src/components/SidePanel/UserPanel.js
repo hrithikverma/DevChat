@@ -40,13 +40,18 @@ class UserPanel extends React.Component {
     return (
       <Grid style={{ background: "#4c3c4c" }}>
         <Grid.Column>
-          <Grid.Row style={{ padding: "1.2em", margin: 0 }}>
+          <Grid.Row style={{ paddingTop: "3vh", margin: 0 }}>
             {/* App Header */}
-            <Header inverted floated="left" as="h2">
+            <Header inverted as="h1">
               <Icon name="code"></Icon>
+              {/* <img src={"images/slack.png"} alt="dev-chat" /> */}
               <Header.Content>DevChat</Header.Content>
             </Header>
-            <Header style={{ padding: "0.25em" }} as="h4" inverted>
+            <Header
+              style={{ padding: "0.25em", marginTop: "3vh" }}
+              as="h4"
+              inverted
+            >
               <Dropdown
                 trigger={
                   <span>
