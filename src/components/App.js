@@ -7,9 +7,6 @@ import SidePanel from "./SidePanel/SidePanel";
 import Messages from "./Messages/Messages";
 import MetaPanel from "./MetaPanel/MetaPanel";
 
-// Things to do at end
-// 1. add firebase config to .env
-
 // prettier-ignore
 const App = ({ currentUser, currentChannel, isPrivateChannel,  userPosts, primaryColor, secondaryColor }) => {
   return (
