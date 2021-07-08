@@ -12,9 +12,13 @@ import MetaPanel from "./MetaPanel/MetaPanel";
 // 2. make responsive ( use flexbox and media query)
 
 // prettier-ignore
-const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts, primaryColor, secondaryColor }) => {
+const App = ({ currentUser, currentChannel, isPrivateChannel,  userPosts, primaryColor, secondaryColor }) => {
   return (
-    <Grid columns="equal" className="app" style={{backgroundColor : secondaryColor}}>
+    <Grid
+      columns="equal"
+      className="app"
+      style={{ backgroundColor: secondaryColor }}
+    >
       <ColorPanel
         key={currentUser && currentUser.name}
         currentUser={currentUser}
@@ -32,16 +36,17 @@ const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts, primary
           isPrivateChannel={isPrivateChannel}
         />
       </Grid.Column>
-      <Grid.Column width={4}>
-        <MetaPanel
-          key={currentChannel && currentChannel.name}
-          currentChannel={currentChannel}
-          userPosts={userPosts}
-          isPrivateChannel={isPrivateChannel}
-        />
-      </Grid.Column>
+      {!isPrivateChannel && (
+        <Grid.Column id="meta_grid" width={4}>
+          <MetaPanel
+            key={currentChannel && currentChannel.name}
+            currentChannel={currentChannel}
+            userPosts={userPosts}
+            isPrivateChannel={isPrivateChannel}
+          />
+        </Grid.Column>
+      )}
     </Grid>
-
   );
 };
 

@@ -100,3 +100,10 @@ h1.ui.header {
   height: 35px;
   transform: rotate(225deg);
 }
+
+/* Media query */
+@media only screen and (max-width: 1050px) {
+  #meta_grid {
+    display: none;
+  }
+}
