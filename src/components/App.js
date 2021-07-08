@@ -11,9 +11,10 @@ import MetaPanel from "./MetaPanel/MetaPanel";
 // 1. add firebase config to .env
 // 2. make responsive ( use flexbox and media query)
 
-const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts }) => {
+// prettier-ignore
+const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts, primaryColor, secondaryColor }) => {
   return (
-    <Grid columns="equal" className="app">
+    <Grid columns="equal" className="app" style={{backgroundColor : secondaryColor}}>
       <ColorPanel
         key={currentUser && currentUser.name}
         currentUser={currentUser}
@@ -21,6 +22,7 @@ const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts }) => {
       <SidePanel
         key={currentUser && currentUser.uid}
         currentUser={currentUser}
+        primaryColor={primaryColor}
       />
       <Grid.Column style={{ marginLeft: 320 }}>
         <Messages
@@ -39,6 +41,7 @@ const App = ({ currentUser, currentChannel, isPrivateChannel, userPosts }) => {
         />
       </Grid.Column>
     </Grid>
+
   );
 };
 
@@ -47,6 +50,8 @@ const mapStateToProps = (state) => ({
   currentChannel: state.channel.currentChannel,
   isPrivateChannel: state.channel.isPrivateChannel,
   userPosts: state.channel.userPosts,
+  primaryColor: state.colors.primaryColor,
+  secondaryColor: state.colors.secondaryColor,
 });
 
 export default connect(mapStateToProps)(App);
