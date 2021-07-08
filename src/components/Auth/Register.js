@@ -1,15 +1,7 @@
 import React from "react";
 import firebase from "../../firebase";
 import md5 from "md5";
-import {
-  Grid,
-  Button,
-  Form,
-  Segment,
-  Header,
-  Message,
-  Icon,
-} from "semantic-ui-react";
+import { Grid, Button, Form, Segment, Header, Message, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 class Register extends React.Component {
@@ -44,12 +36,7 @@ class Register extends React.Component {
   };
 
   isFormEmpty = ({ username, email, password, passwordConfirmation }) => {
-    return (
-      !username.length ||
-      !email.length ||
-      !password.length ||
-      !passwordConfirmation.length
-    );
+    return !username.length || !email.length || !password.length || !passwordConfirmation.length;
   };
 
   displayErrors = (errors) =>
@@ -73,9 +60,7 @@ class Register extends React.Component {
           createdUser.user
             .updateProfile({
               displayName: this.state.username,
-              photoURL: `https://gravatar.com/avatar/${md5(
-                createdUser.user.email
-              )}?d=identicon`,
+              photoURL: `https://gravatar.com/avatar/${md5(createdUser.user.email)}?d=identicon`,
             })
             .then(() => {
               // console.log(createdUser);
@@ -102,16 +87,11 @@ class Register extends React.Component {
   };
 
   handleInputError = (errors, inputName) => {
-    return errors.some((error) =>
-      error.message.toLowerCase().includes(inputName)
-    )
-      ? "error"
-      : "";
+    return errors.some((error) => error.message.toLowerCase().includes(inputName)) ? "error" : "";
   };
 
   render() {
-    const { username, email, password, passwordConfirmation, errors, loading } =
-      this.state;
+    const { username, email, password, passwordConfirmation, errors, loading } = this.state;
 
     return (
       <Grid textAlign="center" verticalAlign="middle" className="app register">
@@ -177,9 +157,7 @@ class Register extends React.Component {
               </Button>
             </Segment>
           </Form>
-          {errors.length > 0 && (
-            <Message error>{this.displayErrors(errors)}</Message>
-          )}
+          {errors.length > 0 && <Message error>{this.displayErrors(errors)}</Message>}
           <Message>
             Already a user? <Link to="/login">Login</Link>
           </Message>

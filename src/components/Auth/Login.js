@@ -1,14 +1,6 @@
 import React from "react";
 import firebase from "../../firebase";
-import {
-  Grid,
-  Button,
-  Form,
-  Segment,
-  Header,
-  Message,
-  Icon,
-} from "semantic-ui-react";
+import { Grid, Button, Form, Segment, Header, Message, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
 class Login extends React.Component {
@@ -51,11 +43,7 @@ class Login extends React.Component {
   };
 
   handleInputError = (errors, inputName) => {
-    return errors.some((error) =>
-      error.message.toLowerCase().includes(inputName)
-    )
-      ? "error"
-      : "";
+    return errors.some((error) => error.message.toLowerCase().includes(inputName)) ? "error" : "";
   };
 
   render() {
@@ -104,9 +92,7 @@ class Login extends React.Component {
               </Button>
             </Segment>
           </Form>
-          {errors.length > 0 && (
-            <Message error>{this.displayErrors(errors)}</Message>
-          )}
+          {errors.length > 0 && <Message error>{this.displayErrors(errors)}</Message>}
           <Message>
             Don't have an account? <Link to="/register">Register</Link>
           </Message>

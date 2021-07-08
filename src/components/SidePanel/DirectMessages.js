@@ -61,6 +61,8 @@ class DirectMessages extends React.Component {
 
   removeListeners = () => {
     this.state.usersRef.off();
+    this.state.connectedRef.off();
+    this.state.presenceRef.off();
   };
 
   addStatusToUser = (userId, connected = true) => {
@@ -90,9 +92,7 @@ class DirectMessages extends React.Component {
 
   getChannelId = (userId) => {
     const currentUserId = this.state.user.uid;
-    return userId < currentUserId
-      ? `${userId}/${currentUserId}`
-      : `${currentUserId}/${userId}`;
+    return userId < currentUserId ? `${userId}/${currentUserId}` : `${currentUserId}/${userId}`;
   };
 
   render() {
@@ -114,11 +114,7 @@ class DirectMessages extends React.Component {
             onClick={() => this.changeChannel(user)}
             style={{ opacity: 0.7, fontStyle: "italic" }}
           >
-            <Icon
-              name="circle"
-              color={user.status === "online" ? "green" : "red"}
-            />
-            @ {user.name}
+            <Icon name="circle" color={user.status === "online" ? "green" : "red"} />@ {user.name}
           </Menu.Item>
         ))}
       </Menu.Menu>
@@ -126,6 +122,4 @@ class DirectMessages extends React.Component {
   }
 }
 
-export default connect(null, { setCurrentChannel, setPrivateChannel })(
-  DirectMessages
-);
+export default connect(null, { setCurrentChannel, setPrivateChannel })(DirectMessages);

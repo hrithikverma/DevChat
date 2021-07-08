@@ -29,6 +29,17 @@ class Messages extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    const { channel, user } = this.state;
+    if (channel && user) {
+      this.removeListeners(channel.id);
+    }
+  }
+
+  removeListeners = (channelId) => {
+    this.getMessagesRef().child(channelId).off();
+  };
+
   addListeners = (channelId) => {
     this.addMessageListener(channelId);
   };
@@ -69,10 +80,7 @@ class Messages extends React.Component {
     const channelMessages = [...this.state.messages];
     const regex = new RegExp(this.state.searchTerm, "gi");
     const searchResults = channelMessages.reduce((acc, message) => {
-      if (
-        (message.content && message.content.match(regex)) ||
-        message.user.name.match(regex)
-      ) {
+      if ((message.content && message.content.match(regex)) || message.user.name.match(regex)) {
         acc.push(message);
       }
       return acc;
@@ -111,17 +119,11 @@ class Messages extends React.Component {
   displayMessages = (messages) =>
     messages.length > 0 &&
     messages.map((message) => (
-      <Message
-        key={message.timestamp}
-        message={message}
-        user={this.state.user}
-      />
+      <Message key={message.timestamp} message={message} user={this.state.user} />
     ));
 
   displayChannelName = (channel) => {
-    return channel
-      ? ` ${this.state.privateChannel ? "@" : "#"} ${channel.name}`
-      : "";
+    return channel ? ` ${this.state.privateChannel ? "@" : "#"} ${channel.name}` : "";
   };
 
   render() {
@@ -150,9 +152,7 @@ class Messages extends React.Component {
         <Segment>
           <div className="messages">
             <Comment.Group size="large">
-              {searchTerm
-                ? this.displayMessages(searchResults)
-                : this.displayMessages(messages)}
+              {searchTerm ? this.displayMessages(searchResults) : this.displayMessages(messages)}
             </Comment.Group>
           </div>
         </Segment>

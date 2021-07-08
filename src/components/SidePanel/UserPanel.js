@@ -40,9 +40,7 @@ class UserPanel extends React.Component {
     return (
       <Grid style={{ background: this.props.primaryColor }}>
         <Grid.Column>
-          <Grid.Row
-            style={{ paddingTop: "5vh", paddingLeft: "0.8vw", margin: 0 }}
-          >
+          <Grid.Row style={{ paddingTop: "5vh", paddingLeft: "0.8vw", margin: 0 }}>
             {/* App Header */}
             <Header inverted as="h2" size="large">
               <Icon name="code"></Icon>

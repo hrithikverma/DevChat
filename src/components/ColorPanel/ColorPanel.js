@@ -22,6 +22,14 @@ class ColorPanel extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+    this.removeListener();
+  }
+
+  removeListener = () => {
+    this.state.usersRef.child(`${this.state.user.uid}/colors`).off();
+  };
+
   addListener = (userId) => {
     let userColors = [];
     this.state.usersRef.child(`${userId}/colors`).on("child_added", (snap) => {
@@ -60,14 +68,8 @@ class ColorPanel extends React.Component {
           className="color__container"
           onClick={() => this.props.setColors(color.primary, color.secondary)}
         >
-          <div
-            className="color__square"
-            style={{ backgroundColor: color.primary }}
-          >
-            <div
-              className="color__overlay"
-              style={{ backgroundColor: color.secondary }}
-            ></div>
+          <div className="color__square" style={{ backgroundColor: color.primary }}>
+            <div className="color__overlay" style={{ backgroundColor: color.secondary }}></div>
           </div>
         </div>
       </React.Fragment>
@@ -81,14 +83,7 @@ class ColorPanel extends React.Component {
     const { modal, primary, secondary, userColors } = this.state;
 
     return (
-      <Sidebar
-        as={Menu}
-        icon="labeled"
-        inverted
-        vertical
-        visible
-        width="very thin"
-      >
+      <Sidebar as={Menu} icon="labeled" inverted vertical visible width="very thin">
         <Divider />
         <Button icon="add" size="small" color="blue" onClick={this.openModal} />
         {this.displayUserColors(userColors)}
@@ -99,17 +94,11 @@ class ColorPanel extends React.Component {
           <Modal.Content>
             <Segment inverted>
               <Label content="Primary Color" />
-              <SliderPicker
-                color={primary}
-                onChange={this.handleChangePrimary}
-              />
+              <SliderPicker color={primary} onChange={this.handleChangePrimary} />
             </Segment>
             <Segment inverted>
               <Label content="Secondary Color" />
-              <SliderPicker
-                color={secondary}
-                onChange={this.handleChangeSecondary}
-              />
+              <SliderPicker color={secondary} onChange={this.handleChangeSecondary} />
             </Segment>
           </Modal.Content>
           <Modal.Actions>

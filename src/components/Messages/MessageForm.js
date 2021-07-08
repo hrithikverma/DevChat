@@ -19,6 +19,13 @@ class MessageForm extends React.Component {
     modal: false,
   };
 
+  componentWillUnmount() {
+    if (this.state.uploadTask !== null) {
+      this.state.uploadTask.cancel();
+      this.setState({ uploadTask: null });
+    }
+  }
+
   openModal = () => this.setState({ modal: true });
 
   closeModal = () => this.setState({ modal: false });
@@ -93,9 +100,7 @@ class MessageForm extends React.Component {
         this.state.uploadTask.on(
           "state_changed",
           (snap) => {
-            const percentUploaded = Math.round(
-              (snap.bytesTransferred / snap.totalBytes) * 100
-            );
+            const percentUploaded = Math.round((snap.bytesTransferred / snap.totalBytes) * 100);
             this.setState({ percentUploaded });
           },
 
@@ -142,8 +147,7 @@ class MessageForm extends React.Component {
   };
 
   render() {
-    const { errors, message, loading, modal, uploadState, percentUploaded } =
-      this.state;
+    const { errors, message, loading, modal, uploadState, percentUploaded } = this.state;
 
     return (
       <Segment className="message__form">
@@ -155,11 +159,7 @@ class MessageForm extends React.Component {
           value={message}
           label={<Button icon="add" />}
           labelPosition="left"
-          className={
-            errors.some((error) => error.message.includes("message"))
-              ? "error"
-              : ""
-          }
+          className={errors.some((error) => error.message.includes("message")) ? "error" : ""}
           placeholder="Write your message"
         />
         <Button.Group icon widths="2">
@@ -180,15 +180,8 @@ class MessageForm extends React.Component {
             icon="cloud upload"
           />
         </Button.Group>
-        <FileModal
-          modal={modal}
-          closeModal={this.closeModal}
-          uploadFile={this.uploadFile}
-        />
-        <ProgressBar
-          uploadState={uploadState}
-          percentUploaded={percentUploaded}
-        />
+        <FileModal modal={modal} closeModal={this.closeModal} uploadFile={this.uploadFile} />
+        <ProgressBar uploadState={uploadState} percentUploaded={percentUploaded} />
       </Segment>
     );
   }

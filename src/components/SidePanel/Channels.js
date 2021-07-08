@@ -65,7 +65,6 @@ class Channels extends React.Component {
       .then(() => {
         this.setState({ channelName: "", channelDetails: "" });
         this.closeModal();
-        // console.log("Channel added");
       })
       .catch((err) => {
         console.log(err);
@@ -103,8 +102,7 @@ class Channels extends React.Component {
       </Menu.Item>
     ));
 
-  isFormValid = ({ channelName, channelDetails }) =>
-    channelName && channelDetails;
+  isFormValid = ({ channelName, channelDetails }) => channelName && channelDetails;
 
   openModal = () => this.setState({ modal: true });
 
@@ -168,6 +166,4 @@ class Channels extends React.Component {
   }
 }
 
-export default connect(null, { setCurrentChannel, setPrivateChannel })(
-  Channels
-);
+export default connect(null, { setCurrentChannel, setPrivateChannel })(Channels);

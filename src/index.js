@@ -4,12 +4,7 @@ import App from "./components/App";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
 import firebase from "./firebase";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  withRouter,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, withRouter } from "react-router-dom";
 import Spinner from "./Spinner";
 import { createStore } from "redux";
 import { Provider, connect } from "react-redux";
@@ -53,9 +48,7 @@ const mapStateFromProps = (state) => {
   };
 };
 
-const RootWithAuth = withRouter(
-  connect(mapStateFromProps, { setUser, clearUser })(Root)
-);
+const RootWithAuth = withRouter(connect(mapStateFromProps, { setUser, clearUser })(Root));
 
 ReactDOM.render(
   <Provider store={store}>
