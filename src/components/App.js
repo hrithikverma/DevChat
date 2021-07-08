@@ -9,7 +9,6 @@ import MetaPanel from "./MetaPanel/MetaPanel";
 
 // Things to do at end
 // 1. add firebase config to .env
-// 2. make responsive ( use flexbox and media query)
 
 // prettier-ignore
 const App = ({ currentUser, currentChannel, isPrivateChannel,  userPosts, primaryColor, secondaryColor }) => {

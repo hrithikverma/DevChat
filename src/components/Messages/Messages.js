@@ -153,6 +153,11 @@ class Messages extends React.Component {
           <div className="messages">
             <Comment.Group size="large">
               {searchTerm ? this.displayMessages(searchResults) : this.displayMessages(messages)}
+              <div
+                ref={(node) => {
+                  if (node) node.scrollIntoView({ behavior: "smooth" });
+                }}
+              ></div>
             </Comment.Group>
           </div>
         </Segment>
